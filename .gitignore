@@ -6,6 +6,19 @@
 *.lo
 *.o
 *.obj
+*.eep
+*.hex
+*.map
+*.sig
+*.lock
+*.lss
+*.elf
+
+# Code::Blocks-Files
+*.depend
+*.layout
+*.zip
+
 
 # Precompiled Headers
 *.gch
