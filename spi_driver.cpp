@@ -86,7 +86,7 @@
  *  \param clk2x	      SPI double speed mode
  *  \param clockDivision  SPI clock prescaler divison factor.
  */
-void SPI_MasterInit(SPI_Master_t *spi,
+uint8_t SPI_MasterInit(SPI_Master_t *spi,
                     SPI_t *module,
                     PORT_t *port,
                     bool lsbFirst,
@@ -95,17 +95,18 @@ void SPI_MasterInit(SPI_Master_t *spi,
                     bool clk2x,
                     SPI_PRESCALER_t clockDivision)
 {
+  uint8_t config;
 	spi->module         = module;
 	spi->port           = port;
 	spi->interrupted    = false;
 
-	spi->module->CTRL   = clockDivision |                  /* SPI prescaler. */
-	                      (clk2x ? SPI_CLK2X_bm : 0) |     /* SPI Clock double. */
-	                      SPI_ENABLE_bm |                  /* Enable SPI module. */
-	                      (lsbFirst ? SPI_DORD_bm  : 0) |  /* Data order. */
-	                      SPI_MASTER_bm |                  /* SPI master. */
-	                      mode;                            /* SPI mode. */
-
+	config   =  clockDivision |                  /* SPI prescaler. */
+              (clk2x ? SPI_CLK2X_bm : 0) |     /* SPI Clock double. */
+              SPI_ENABLE_bm |                  /* Enable SPI module. */
+              (lsbFirst ? SPI_DORD_bm  : 0) |  /* Data order. */
+              SPI_MASTER_bm |                  /* SPI master. */
+              mode;                            /* SPI mode. */
+	spi->module->CTRL = config;
 	/* Interrupt level. */
 	spi->module->INTCTRL = intLevel;
 
@@ -114,6 +115,13 @@ void SPI_MasterInit(SPI_Master_t *spi,
 
  	/* MOSI and SCK as output. */
 	spi->port->DIRSET  = SPI_MOSI_bm | SPI_SCK_bm;
+	return(config);
+}
+
+
+inline void SPI_MasterReconfigure(SPI_Master_t *spi,uint8_t config)
+{
+  spi->module->CTRL = config;
 }
 
 
@@ -130,6 +138,7 @@ void SPI_MasterInit(SPI_Master_t *spi,
  *  \param lsbFirst             Data order will be LSB first if this is set to true.
  *  \param mode                 SPI mode (Clock polarity and phase).
  *  \param intLevel             SPI interrupt level.
+ *  \retval
  */
 void SPI_SlaveInit(SPI_Slave_t *spi,
                    SPI_t *module,

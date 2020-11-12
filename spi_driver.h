@@ -96,7 +96,7 @@ typedef struct SPI_DataPacket
 } SPI_DataPacket_t;
 
 
-/*! \brief SPI master struct. Holds pointer to SPI module, buffers and necessary varibles. */
+/*! \brief SPI master struct. Holds pointer to SPI module, buffers and necessary variables. */
 typedef struct SPI_Master
 {
 	SPI_t *module;                /*!< \brief Pointer to what module to use. */
@@ -181,10 +181,10 @@ typedef struct SPI_Slave
 
 /* Prototype functions. Documentation found in source file */
 
-void SPI_MasterInit(SPI_Master_t *spi,
+uint8_t SPI_MasterInit(SPI_Master_t *spi,
                     SPI_t *module,
                     PORT_t *port,
-					bool lsbFirst,
+                    bool lsbFirst,
                     SPI_MODE_t mode,
                     SPI_INTLVL_t intLevel,
                     bool clk2x,
