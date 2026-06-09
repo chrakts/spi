@@ -6,7 +6,10 @@ spiDevice::spiDevice(SPI_t *module,PORT_t *spiPort,PORT_t *csPort,uint8_t csPin,
   //ctor
   _csPort     = csPort;
   _csPin      = csPin;
+  _csPort->DIRSET = _csPin;
   _config = SPI_MasterInit(&_spi,module,spiPort,lsbFirst,mode,intLevel,clk2x,clockDivision);
+
+
 }
 
 spiDevice::~spiDevice()
@@ -46,4 +49,9 @@ uint8_t rec,trans,i;
       receiveBytes[i] = rec;
   }
   unselect();
+}
+
+void spiDevice::interruptHandler()
+{
+  SPI_MasterInterruptHandler(&_spi);
 }
