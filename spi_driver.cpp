@@ -1,3 +1,4 @@
+#include "ledHardware.h"
 /* This file has been prepared for Doxygen automatic documentation generation.*/
 /*! \file *********************************************************************
  *
@@ -214,6 +215,7 @@ void SPI_MasterInterruptHandler(SPI_Master_t *spi)
 	uint8_t data;
 	uint32_t bytesTransceived = spi->dataPacket->bytesTransceived;
 
+
 	/* If SS pin interrupt (SS used and pulled low).
 	*  No data received at this point. */
 	if ( !(spi->module->CTRL & SPI_MASTER_bm) ) {
@@ -255,6 +257,8 @@ void SPI_MasterInterruptHandler(SPI_Master_t *spi)
 	}
 	/* Write back bytesTransceived to data packet. */
 	spi->dataPacket->bytesTransceived = bytesTransceived;
+
+
 }
 
 
@@ -356,7 +360,6 @@ uint8_t SPI_MasterTransceiveByte(SPI_Master_t *spi, uint8_t TXdata)
 
 	/* Wait for transmission complete. */
 	while(!(spi->module->STATUS & SPI_IF_bm)) {
-
 	}
 	/* Read received data. */
 	uint8_t result = spi->module->DATA;

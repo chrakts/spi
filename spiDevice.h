@@ -24,15 +24,14 @@ class spiDevice
     void unselect();
     uint8_t transceiveByte(uint8_t TXdata);
     void transceiveBytes(uint8_t transceiveLength, uint8_t *transmitBytes, uint8_t *receiveBytes);
+    void interruptHandler();
 
   protected:
     uint8_t _config;
     SPI_Master_t _spi;
     PORT_t *_csPort;
     uint8_t _csPin;
-
   private:
-
 };
 
 #endif // SPIDEVICE_H

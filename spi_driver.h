@@ -66,6 +66,7 @@
 #include <stdbool.h>
 #include <avr/pgmspace.h>
 #include <avr/interrupt.h>
+#include <util/delay.h>
 #include <stddef.h>
 
 /* Hardware defines */
