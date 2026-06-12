@@ -7,6 +7,8 @@ spiDevice::spiDevice(SPI_t *module,PORT_t *spiPort,PORT_t *csPort,uint8_t csPin,
   _csPort     = csPort;
   _csPin      = csPin;
   _config = SPI_MasterInit(&_spi,module,spiPort,lsbFirst,mode,intLevel,clk2x,clockDivision);
+  // CS als Output
+ 	_csPort->DIRSET  = csPin;
 }
 
 spiDevice::~spiDevice()

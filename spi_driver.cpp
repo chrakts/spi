@@ -115,6 +115,8 @@ uint8_t SPI_MasterInit(SPI_Master_t *spi,
 
  	/* MOSI and SCK as output. */
 	spi->port->DIRSET  = SPI_MOSI_bm | SPI_SCK_bm;
+	spi->port->DIRCLR  = SPI_MISO_bm;
+
 	return(config);
 }
 
